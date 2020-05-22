@@ -46,8 +46,6 @@ const ImageResults = ({ images }) => {
 
   const handleClose = () => setOpen(false);
 
-  console.log("imagesview ", images);
-
   const imageList = images.length ? (
     <GridList
       className={classes.gridList}
@@ -94,6 +92,7 @@ const ImageResults = ({ images }) => {
       Close
     </Button>
   ];
+
   return (
     <div className="classes.root">
       {imageList}

@@ -17,10 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Search = ({ defaultText, defaultHits, handleChange, handleSubmit }) => {
-  //console.log("defaults ", defaultText, " ", defaultHits);
-
   const classes = useStyles();
-
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <SearchText defaultText={defaultText} onSearchInput={handleChange} />

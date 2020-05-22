@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Select, TextField } from "@material-ui/core/";
+import { Select } from "@material-ui/core/";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const qty = [
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 const SearchNumber = ({ defaultHits, onSearchHits }) => {
   const classes = useStyles();
-  console.log("search number");
+
   return (
     <div>
       <Select

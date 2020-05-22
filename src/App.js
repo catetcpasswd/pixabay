@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import NavBar from "./components/navbar/Navbar";
 import Search from "./components/search/Search";
@@ -7,53 +7,43 @@ import fetchImages from "./api/pixabay";
 
 const theme = createMuiTheme();
 
-class App extends Component {
-  state = {
+const App = () => {
+  const [state, setState] = useState({
     searchText: "Llamas",
     amount: 5,
     images: []
-  };
+  });
 
-  handleChange = event => {
+  const handleChange = event => {
     const { name, value } = event.target;
-
-    this.setState({ [name]: value });
+    setState({ ...state, [name]: value });
   };
 
-  handleSubmit = async event => {
-    //console.log("HandleSubmit ", event.target.name);
+  const handleSubmit = async event => {
+    const fetchedData = await fetchImages(state.searchText, state.amount);
 
-    const fetchedData = await fetchImages(
-      this.state.searchText,
-      this.state.amount
-    );
-
-    console.log("search for ", this.state.searchText.length);
-    if (this.state.searchText.length) {
+    if (state.searchText.length) {
       const hits = fetchedData.data.hits;
-      //console.log("hits ", hits);
-      this.setState({ images: hits });
+      setState({ ...state, images: hits });
     }
   };
 
-  render() {
-    const { searchText, amount } = this.state;
+  const { searchText, amount } = state;
 
-    return (
-      <MuiThemeProvider theme={theme}>
-        <div>
-          <NavBar />
-          <Search
-            defaultText={searchText}
-            defaultHits={amount}
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-          />
-        </div>
-        <ViewImages images={this.state.images} />
-      </MuiThemeProvider>
-    );
-  }
-}
+  return (
+    <MuiThemeProvider theme={theme}>
+      <div>
+        <NavBar />
+        <Search
+          defaultText={searchText}
+          defaultHits={amount}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+      </div>
+      <ViewImages images={state.images} />
+    </MuiThemeProvider>
+  );
+};
 
 export default App;
